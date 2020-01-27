@@ -7,7 +7,7 @@ class User < ApplicationRecord
                             format: { with: VALID_EMAIL_REGEX },
                             uniqueness: { case_sensitive: false}
     has_secure_password
-    validates :password, presence: true,length: { minimum: 6 }
+    validates :password, presence: true,length: { minimum: 6 },allow_nil: true #このオプションを追加するのなら、そもそもこのvalidationは必要？
 
     #渡された文字列bのハッシュ値を返す
     def User.digest(string)
