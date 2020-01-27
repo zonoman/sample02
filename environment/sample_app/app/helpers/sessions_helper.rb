@@ -51,7 +51,15 @@ module SessionsHelper
       @current_user = nil
     end
     
+    def redirect_back_or(default)
+      redirect_to(session[:forwarding_url]||default)#値がnilでなければsession[:forwarding_url]を評価し、そうでなければデフォルトのURLを使っています
+      session.delete(:forwarding_url)#これをやっておかないと、次回ログインしたときに保護されたページに転送されてしまい、ブラウザを閉じるまでこれが繰り返されてしまいます
+    end
+
+
     
-    
+    def store_location
+      session[:forwarding_url] = request.original_url if request.get?
+    end
 
 end
